@@ -1,0 +1,41 @@
+package flexism:plugin;
+
+/// An example world for the component to target.
+
+interface plugin-impl { 
+  name: func() -> string;
+  version: func() -> string;
+  description: func() -> string;
+  load: func() -> result<_, string>;
+  unload: func() -> result<_, string>;
+  enable: func() -> result<_, string>;
+  disable: func() -> result<_, string>;
+  on-event: func(event: string, data: list<u8>) -> result<_, string>;
+}
+
+interface plugin-register {
+  // Register an event that the plugin will receive. returns whether or not the event was registered.
+  register-event: func(event: string) -> bool;
+  // Toggle event registration. Returns None if the event doesn't exist, true if now listening, false otherwise.
+  toggle-event: func(event: string) -> option<bool>;
+  // Emit an event to the world.
+  emit-event: func(event: string, data: list<u8>) -> result<_, string>;
+}
+
+interface key-value {
+  get: func(key: string) -> option<list<u8>>;
+  set: func(key: string, value: list<u8>) -> result<_, string>;
+  delete: func(key: string) -> result<_, string>;
+}
+
+// world plugin {
+//   export plugin-impl;
+//   import plugin-register;
+//   import key-value;
+// }
+
+world plugin {
+  import plugin-register;
+  import key-value;
+  export plugin-impl;
+}

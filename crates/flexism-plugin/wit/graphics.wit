@@ -1,0 +1,13 @@
+package component:flexism-plugin;
+
+interface device {
+
+  resource buffer {
+    constructor(data: list<u8>);
+    
+  }
+}
+
+interface buffer {
+
+}

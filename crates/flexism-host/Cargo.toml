@@ -1,0 +1,11 @@
+[package]
+name = "flexism-host"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+async-std = { version = "1.12.0", features = ["attributes"] }
+wasmtime = "24.0.0"
+wasmtime-wasi = { version = "24.0.0" }
+anyhow = "1.0.88"
+async-trait = "0.1.82"
