@@ -1,8 +1,12 @@
-use exports::flexism::plugin::plugin_impl::Guest;
-use flexism_plugin::{export, exports};
+use exports::flexism::plugin::plugin_impl::Guest as ImplGuest;
+// use exports::flexism::plugin::pl::Guest as MetaGuest;
+use flexism_plugin::{
+    export,
+    exports::{self, flexism::plugin::plugin_meta::Guest as MetaGuest},
+};
 struct Plugin;
 
-impl Guest for Plugin {
+impl MetaGuest for Plugin {
     fn name() -> String {
         "Test".to_string()
     }
@@ -15,8 +19,19 @@ impl Guest for Plugin {
         "Test plugin".to_string()
     }
 
+    fn requires() -> Vec<String> {
+        vec![]
+    }
+}
+
+impl ImplGuest for Plugin {
     fn load() -> Result<(), String> {
         println!("Loading plugin");
+        let read = std::fs::read_dir("/assets").map_err(|e| e.to_string())?;
+        for file in read {
+            let file = file.map_err(|e| e.to_string())?;
+            println!("Found file: {:?}", file.file_name());
+        }
         Ok(())
     }
 
